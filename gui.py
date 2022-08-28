@@ -1,22 +1,27 @@
 from fileinput import filename
 import PySimpleGUI as sg
 import os.path
+import sys
+
+from models.models import ResNet
+sys.path.append("/home/skawy/side_projects/Sports-Image-Classification/models")
+
+import models
+
 
 file_list_column = [
     [
         sg.Text("Image Folder"),
-        sg.In(size=(25,1) , enable_events=True, key="-FOLDER-"),
+        sg.In(size=(40,1) , enable_events=True, key="-FOLDER-"),
         sg.FolderBrowse(),
     ],
+    [sg.HSeparator(pad = (0,40))],
     [
         sg.Listbox(
-            values=[], enable_events=True , size=(40,20),
+            values=[], enable_events=True , size=(50,60),
             key= "-FILE LIST-"
         )
     ],
-    [
-        sg.Text("This Sport is: " , key= "-SPORT NAME-") 
-    ]
     
 ]
 
@@ -24,7 +29,8 @@ file_list_column = [
 image_viewer_column = [
     [sg.Text("Choose an Image From The list on the Left")],
     [sg.Text(size=(40,1) , key= "-TOUT-")],
-    [sg.Image(key="-IMAGE-" )]
+    [sg.Image(key="-IMAGE-" )],
+    [sg.Text("This Sport is: " , key= "-SPORT NAME-")]
 ]
 
 layout = [
@@ -35,7 +41,8 @@ layout = [
     ]
 ]
 
-window = sg.Window("Image Viewer", layout)
+window = sg.Window("Image Viewer", layout , resizable= True).finalize()
+window.maximize()
 
 # event loop
 
@@ -65,9 +72,10 @@ while True:
             )
             window["-TOUT-"].update(filename)
             window["-IMAGE-"].update(filename = filename, size = (720,720))
-            window["-SPORT NAME-"].update("Done")
+            window["-SPORT NAME-"].update(ResNet().predict(filename))
         except:
             pass
 
 
 window.close()
+
