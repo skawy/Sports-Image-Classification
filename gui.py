@@ -2,12 +2,14 @@ from fileinput import filename
 import PySimpleGUI as sg
 import os.path
 import sys
+import pandas as pd
 
-from models.models import ResNet
+from models.models import CNN, CustomModel
 sys.path.append("/home/skawy/side_projects/Sports-Image-Classification/models")
 
-import models
 
+df = pd.read_csv('/home/skawy/side_projects/Sports-Image-Classification/class_dict.csv')
+sports = df['class'] 
 
 file_list_column = [
     [
@@ -72,7 +74,9 @@ while True:
             )
             window["-TOUT-"].update(filename)
             window["-IMAGE-"].update(filename = filename, size = (720,720))
-            window["-SPORT NAME-"].update(ResNet().predict(filename))
+            Cnn = CustomModel(CNN())
+    
+            window["-SPORT NAME-"].update(filename)
         except:
             pass
 
