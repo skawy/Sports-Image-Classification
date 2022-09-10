@@ -4,9 +4,11 @@ __pycache__/
 *$py.class
 
 kaggle_dataset/*
+models/weights/*
 # C extensions
 *.so
 
+test.py
 # Distribution / packaging
 .Python
 build/
@@ -22,6 +24,7 @@ sdist/
 var/
 wheels/
 pip-wheel-metadata/
+
 share/python-wheels/
 *.egg-info/
 .installed.cfg
