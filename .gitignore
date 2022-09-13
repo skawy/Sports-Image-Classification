@@ -8,7 +8,6 @@ models/weights/*
 # C extensions
 *.so
 
-.test.py
 # Distribution / packaging
 .Python
 build/
